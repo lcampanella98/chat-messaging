@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../ChatResources/ChatResources.iml" filepath="$PROJECT_DIR$/../ChatResources/ChatResources.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Client Messaging/Client Messaging.iml" filepath="$PROJECT_DIR$/../Client Messaging/Client Messaging.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Server Messaging.iml" filepath="$PROJECT_DIR$/Server Messaging.iml" />
+    </modules>
+  </component>
+</project>
