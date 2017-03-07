@@ -3,7 +3,6 @@ package server;
 import chat.res.LoadUsersMessage;
 import chat.res.Message;
 import chat.res.MessageType;
-import chat.res.sender.Sender;
 import chat.res.sender.ServerSender;
 import chat.res.sender.User;
 
@@ -80,7 +79,7 @@ public final class ServerMain extends JFrame {
         startButton = new javax.swing.JButton();
         stopButton = new javax.swing.JButton();
 
-        setTitle("Chat ServerSender");
+        setTitle("Chat Server");
 
         outputPane.setColumns(20);
         outputPane.setEditable(false);
@@ -164,7 +163,7 @@ public final class ServerMain extends JFrame {
         serverListener = new ServerListener();
         new Thread(serverListener).start(); // listen for connections to the server
 
-        log("ServerSender started. Listening for connections...");
+        log("Server started. Listening for connections...");
     }
 
     /**
@@ -177,15 +176,15 @@ public final class ServerMain extends JFrame {
         if (serverListener == null) return; // server already stopped
 
         broadcastMessage(new Message(serverSender,
-                "ServerSender is stopping and all users will be disconnected",
+                "Server is stopping and all users will be disconnected",
                 MessageType.MESSAGE));
 
-        log("ServerSender stopping... ");
+        log("Server stopping... ");
 
         serverStop();
 
         colorIndex = 0;
-        log("ServerSender stopped");
+        log("Server stopped");
     }
 
     /**
