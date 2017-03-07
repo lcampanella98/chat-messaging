@@ -576,26 +576,26 @@ public final class ChatMain extends JFrame {
             usernameField.requestFocus();
             return;
         }
-        String typed = inputTextArea.getText();
-        if (typed.trim().isEmpty()) {
+        String text = inputTextArea.getText().trim();
+        if (text.isEmpty()) {
             inputTextArea.requestFocus();
-        } else if (typed.length() > 200) {
+        } else if (text.length() > 200) {
             showUserMessage(internalSender,
                     "Message too long; cannot be over 200 characters long.");
         } else {
             Message message;
             if (typingProtectedMessage) {
-                if (typed.equalsIgnoreCase("cancel")) {
+                if (text.equalsIgnoreCase("cancel")) {
                     typingProtectedMessage = false;
                     recipient = null;
-                    showUserMessage(internalSender, "Message Sucessfully Canceled");
+                    showUserMessage(internalSender, "Message Successfully Canceled");
                 } else {
-                    message = new Message(user, typed,
-                            MessageType.MESSAGE, recipient);
+                    message = new Message(user, recipient, text,
+                            MessageType.MESSAGE);
                     if (sendMessage(message)) {
                         showUserMessage(internalSender,
                                 "Message to " + recipient.getName()
-                                        + " was sent sucessfully");
+                                        + " was sent successfully");
                     } else {
                         showUserMessage(internalSender,
                                 "Cancelling private message Status.");
@@ -605,7 +605,7 @@ public final class ChatMain extends JFrame {
                     }
                 }
             } else {
-                message = new Message(user, typed,
+                message = new Message(user, text,
                         MessageType.MESSAGE);
                 sendMessage(message);
             }

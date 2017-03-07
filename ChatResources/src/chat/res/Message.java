@@ -11,27 +11,22 @@ public class Message implements Serializable {
     private MessageType msgType;
 
     public Message(Sender sender, String text, MessageType messageType) {
-        this.sender = sender;
-        this.text = text;
-        msgType = messageType;
+        this(sender, null, text, messageType);
     }
 
     public Message(Sender sender, MessageType messageType) {
-        this.sender = sender;
-        msgType = messageType;
+        this(sender, null, "", messageType);
     }
 
-    public Message(Sender sender, String text, MessageType messageType, Sender receiver) {
-        msgType = messageType;
-        this.sender = sender;
-        setMessageText(text);
+    public Message(Sender sender, Sender receiver, MessageType messageType) {
+        this(sender, receiver, "", messageType);
+    }
+
+    public Message(Sender sender, Sender receiver, String text, MessageType messageType) {
+        setMessageType(messageType);
+        setSender(sender);
         setReceiver(receiver);
-    }
-
-    public Message(Sender sender, MessageType messageType, Sender receiver) {
-        this.sender = sender;
-        msgType = messageType;
-        this.receiver = receiver;
+        setMessageText(text);
     }
 
     public Sender getSender() {
@@ -67,7 +62,7 @@ public class Message implements Serializable {
     }
 
     public String toString() {
-        return msgType.toString() + (text != null ? " : " + text : "");
+        return msgType + ((text != null && !text.isEmpty()) ? " : " + text : "");
     }
 
 }

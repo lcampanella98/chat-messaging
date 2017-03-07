@@ -34,7 +34,7 @@ public final class ServerMain extends JFrame {
             new Color(86, 201, 32), new Color(202, 217, 43),
             new Color(255, 162, 14), new Color(230, 48, 90),
             new Color(237, 47, 168), new Color(210, 26, 217),
-            new Color(144, 39, 230)}; // give each new user a color
+            new Color(144, 39, 230)}; // assign to each new user a predefined color
 
     private int colorIndex; // current index in userColors
 
@@ -224,8 +224,8 @@ public final class ServerMain extends JFrame {
         Message message;
 
         if (clients.containsKey(user.getName())) { // user-name (case sensitive) already taken
-            message = new Message(serverSender,
-                    "Someone has already taken that username", MessageType.FAILED, user);
+            message = new Message(serverSender, user,
+                    "Someone has already taken that username", MessageType.FAILED);
             sendPrivateMessage(message);
             return false;
         }

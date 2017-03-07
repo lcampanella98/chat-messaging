@@ -10,7 +10,7 @@ public class LoadUsersMessage extends Message {
     private ArrayList<User> users;
 
     public LoadUsersMessage(Sender sender, Sender receiver, ArrayList<User> userData) {
-        super(sender, MessageType.LOAD_USERS, receiver);
+        super(sender, receiver, MessageType.LOAD_USERS);
         users = userData;
     }
 

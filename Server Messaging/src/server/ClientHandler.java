@@ -58,7 +58,6 @@ public class ClientHandler implements Runnable {
                         // tell everyone the new user connected
                         server.broadcastMessage(new Message(server.serverSender,
                                 message.getSender().getName() + " has joined the chat.", MessageType.MESSAGE));
-
                     }
 
                 } else if (msgType.equals(MessageType.DISCONNECT)) { // client sent their disconnect message
@@ -71,7 +70,6 @@ public class ClientHandler implements Runnable {
                     // tell everyone the user disconnected
                     server.broadcastMessage(new Message(server.serverSender,
                             user + " has disconnected.", MessageType.MESSAGE));
-
 
                 } else if (msgType.equals(MessageType.MESSAGE)) { // the client sent a message
                     if (message.getReceiver() == null) // message intended for the whole chat
