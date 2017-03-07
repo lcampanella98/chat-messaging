@@ -162,8 +162,8 @@ public final class ServerMain extends JFrame {
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {
         if (serverListener != null) return; // server already running
 
-        serverListener = new ServerListener(); // instantiate ServerListener
-        new Thread(serverListener).start(); // start the thread to listen for connections to the server
+        serverListener = new ServerListener();
+        new Thread(serverListener).start(); // listen for connections to the server
 
         log("Server started. Listening for connections...");
     }
