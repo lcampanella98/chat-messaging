@@ -4,7 +4,7 @@ import chat.res.LoadUsersMessage;
 import chat.res.Message;
 import chat.res.MessageType;
 import chat.res.sender.Sender;
-import chat.res.sender.Server;
+import chat.res.sender.ServerSender;
 import chat.res.sender.User;
 
 import javax.swing.*;
@@ -26,7 +26,7 @@ public final class ServerMain extends JFrame {
 
     Map<String, ClientHandler> clients; // map of user-names to clients
 
-    Sender serverSender; // sender object used for server messages
+    ServerSender serverSender; // sender object used for server messages
 
     private static Color[] userColors = {
             new Color(61, 90, 255),
@@ -64,10 +64,9 @@ public final class ServerMain extends JFrame {
             e.printStackTrace();
         }
 
-
         setLocationRelativeTo(null); // centers the window
 
-        serverSender = new Server("[SERVER]", Color.RED);
+        serverSender = new ServerSender("[SERVER]", Color.RED);
         colorIndex = 0;
     }
 
@@ -81,7 +80,7 @@ public final class ServerMain extends JFrame {
         startButton = new javax.swing.JButton();
         stopButton = new javax.swing.JButton();
 
-        setTitle("Chat Server");
+        setTitle("Chat ServerSender");
 
         outputPane.setColumns(20);
         outputPane.setEditable(false);
@@ -165,7 +164,7 @@ public final class ServerMain extends JFrame {
         serverListener = new ServerListener();
         new Thread(serverListener).start(); // listen for connections to the server
 
-        log("Server started. Listening for connections...");
+        log("ServerSender started. Listening for connections...");
     }
 
     /**
@@ -178,15 +177,15 @@ public final class ServerMain extends JFrame {
         if (serverListener == null) return; // server already stopped
 
         broadcastMessage(new Message(serverSender,
-                "Server is stopping and all users will be disconnected",
+                "ServerSender is stopping and all users will be disconnected",
                 MessageType.MESSAGE));
 
-        log("Server stopping... ");
+        log("ServerSender stopping... ");
 
         serverStop();
 
         colorIndex = 0;
-        log("Server stopped");
+        log("ServerSender stopped");
     }
 
     /**
@@ -201,7 +200,7 @@ public final class ServerMain extends JFrame {
                 for (ClientHandler handler : clients.values()) {
                     handler.stop(); // stop() each client
                 }
-                clients.clear(); // clear the map of clients
+                clients.clear();
             }
 
             if (serverListener != null) {

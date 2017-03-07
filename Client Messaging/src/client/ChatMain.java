@@ -3,7 +3,7 @@ package client;
 import chat.res.HelperMethods;
 import chat.res.Message;
 import chat.res.MessageType;
-import chat.res.sender.Internal;
+import chat.res.sender.InternalSender;
 import chat.res.sender.Sender;
 import chat.res.sender.User;
 import sun.net.util.IPAddressUtil;
@@ -40,7 +40,7 @@ public final class ChatMain extends JFrame {
     private boolean isConnected, isConnecting;
     private boolean typingProtectedMessage;
 
-    Sender internalSender;
+    InternalSender internalSender;
 
     private User recipient;
 
@@ -68,7 +68,7 @@ public final class ChatMain extends JFrame {
 
     private ChatMain() {
 
-        internalSender = new Internal("[INTERNAL]", Color.RED);
+        internalSender = new InternalSender("[INTERNAL]", Color.RED);
 
         setFont(new Font("Calibri", Font.PLAIN, 14));
 
