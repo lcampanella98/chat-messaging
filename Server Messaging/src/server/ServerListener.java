@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.HashMap;
 
-public class ServerRun implements Runnable {
+public class ServerListener implements Runnable {
 
     public static final int port = 5000;
 
@@ -14,7 +14,7 @@ public class ServerRun implements Runnable {
     private ServerSocket serverSock;
     private boolean shouldRun;
 
-    public ServerRun() {
+    public ServerListener() {
         server = ServerMain.getInstance();
         server.clients = new HashMap<>();
         try {
@@ -39,7 +39,7 @@ public class ServerRun implements Runnable {
 
                 new Thread(listener).start(); // start a new thread to listen for messages
 
-                server.log("Got a connection from " + clientSock.getInetAddress()); // log the connection
+                server.log("Got a connection from " + clientSock.getInetAddress());
             } catch (SocketException ignored) { // SocketException caught when stop() is called
             } catch (IOException e) {
                 e.printStackTrace();

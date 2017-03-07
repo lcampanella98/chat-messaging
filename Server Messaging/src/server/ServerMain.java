@@ -9,6 +9,8 @@ import chat.res.sender.User;
 
 import javax.swing.*;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -20,7 +22,7 @@ public final class ServerMain extends JFrame {
 
     private static ServerMain instance; // singleton instance
 
-    private ServerRun starter; // listener for connections
+    private ServerListener serverListener; // listener for connections
 
     Map<String, ClientHandler> clients; // map of user-names to clients
 
@@ -64,6 +66,7 @@ public final class ServerMain extends JFrame {
 
 
         setLocationRelativeTo(null); // centers the window
+
         serverSender = new Server("[SERVER]", Color.RED); // creates a server sender
         colorIndex = 0;
     }
@@ -88,15 +91,15 @@ public final class ServerMain extends JFrame {
         jScrollPane.setViewportView(outputPane);
 
         startButton.setText("Start");
-        startButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        startButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 startButtonActionPerformed(evt);
             }
         });
 
         stopButton.setText("Stop");
-        stopButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        stopButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 stopButtonActionPerformed(evt);
             }
         });
@@ -157,10 +160,10 @@ public final class ServerMain extends JFrame {
      * @param evt
      */
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        if (starter != null) return;
+        if (serverListener != null) return; // server already running
 
-        starter = new ServerRun(); // instantiate ServerRun
-        new Thread(starter).start(); // start the thread to listen for connections to the server
+        serverListener = new ServerListener(); // instantiate ServerListener
+        new Thread(serverListener).start(); // start the thread to listen for connections to the server
 
         log("Server started. Listening for connections...");
     }
@@ -172,7 +175,7 @@ public final class ServerMain extends JFrame {
      * @param evt
      */
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        if (starter == null) return;
+        if (serverListener == null) return; // server already stopped
 
         broadcastMessage(new Message(serverSender,
                 "Server is stopping and all users will be disconnected",
@@ -201,9 +204,9 @@ public final class ServerMain extends JFrame {
                 clients.clear(); // clear the map of clients
             }
 
-            if (starter != null) {
-                starter.stop(); // stop() the starter
-                starter = null;
+            if (serverListener != null) {
+                serverListener.stop(); // stop() the serverListener
+                serverListener = null;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -336,14 +339,13 @@ public final class ServerMain extends JFrame {
      * @param args Command line arguments, not looked at
      */
     public static void main(String args[]) {
-        Runnable serverRun = new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 ServerMain main = ServerMain.getInstance();
                 main.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
                 main.setVisible(true);
             }
-        };
-        SwingUtilities.invokeLater(serverRun);
+        });
     }
 }
